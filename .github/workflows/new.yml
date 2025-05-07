@@ -1,0 +1,18 @@
+name: Run SQL Logic
+
+on: [push]
+
+jobs:
+  run-sql:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Set up SQLite
+        run: sudo apt-get install sqlite3
+
+      - name: Create and Run SQL Script
+        run: |
+          echo "CREATE TABLE employees (id INTEGER PRIMARY KEY, name TEXT);" > script.sql
+          echo "INSERT INTO employees (name) VALUES ('John'), ('Jane');" >> script.sql
+          echo "SELECT * FROM employees;" >> script.sql
+          sqlite3 test.db < script.sql
